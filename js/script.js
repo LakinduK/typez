@@ -127,23 +127,31 @@ function spawnWord() {
 // Check User Input
 function checkWord() {
   const typedWord = wordInput.value.trim();
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].textContent === typedWord) {
-      // Correct Word Typed
+
+  words.forEach((wordElement, index) => {
+    const originalWord = wordElement.getAttribute("data-word"); // Retrieve original word
+    const wordText = originalWord || wordElement.textContent; // Fallback for first-time setup
+
+    if (wordText.startsWith(typedWord)) {
+      // Highlight matching portion in red
+      wordElement.innerHTML = `
+        <span style="color: red;">${wordText.substring(0, typedWord.length)}</span>${wordText.substring(typedWord.length)}
+      `;
+      wordElement.setAttribute("data-word", wordText); // Save original word
+    } else {
+      // Reset the word's color if no match
+      wordElement.innerHTML = wordText;
+      wordElement.setAttribute("data-word", wordText); // Save original word
+    }
+
+    if (typedWord === wordText) {
+      // Word fully matched
       score++;
       scoreDisplay.textContent = score;
-      gameArea.removeChild(words[i]);
-      words.splice(i, 1);
-      wordInput.value = "";
-      break;
+      gameArea.removeChild(wordElement);
+      words.splice(index, 1); // Remove matched word
+      wordInput.value = ""; // Clear input
     }
-  }
-}
-
-// Stop Game
-function stopGame() {
-  clearInterval(gameInterval);
-  words.forEach((word) => word.remove());
-  words = [];
+  });
 }
 
