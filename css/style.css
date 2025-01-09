@@ -1,0 +1,37 @@
+/* Game Area */
+#game-area {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background-color: #f8f9fa;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Falling Words */
+  .word {
+    position: absolute;
+    top: 0;
+    font-size: 1.2rem;
+    color: #333;
+    animation: fall linear;
+  }
+  
+  /* Input and Buttons */
+  #word-input {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  #start-btn {
+    width: 200px;
+  }
+  
+  /* Animations */
+  @keyframes fall {
+    to {
+      top: 400px;
+    }
+  }
+  
