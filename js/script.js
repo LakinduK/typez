@@ -1,16 +1,3 @@
-// Game Variables
-const wordList = [
-  "apple",
-  "banana",
-  "cherry",
-  "date",
-  "grape",
-  "lemon",
-  "mango",
-  "orange",
-  "peach",
-  "pear",
-];
 const gameArea = document.getElementById("game-area");
 const wordInput = document.getElementById("word-input");
 const scoreDisplay = document.getElementById("score");
