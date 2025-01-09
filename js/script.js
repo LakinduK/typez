@@ -1,6 +1,8 @@
 const gameArea = document.getElementById("game-area");
 const wordInput = document.getElementById("word-input");
 const scoreDisplay = document.getElementById("score");
+const highScoreDisplay = document.getElementById("high-score"); // High score display
+const highScoreGameOver = document.getElementById("high-score-game-over");
 const startBtn = document.getElementById("start-btn");
 const difficultySelect = document.getElementById("difficulty");
 const mainWindow = document.getElementById("main-window");
@@ -9,10 +11,14 @@ const finalScore = document.getElementById("final-score");
 const restartBtn = document.getElementById("restart-btn");
 
 let score = 0;
+let highScore = localStorage.getItem("highScore") || 0; // Load high score from local storage
 let gameInterval;
 let words = [];
 let spawnRate = 1000; // Word spawn frequency
 let fallSpeed = 3; // Word falling speed in seconds
+startBtn.disabled = false; // Enable start button
+// Display high score at the start
+highScoreDisplay.textContent = highScore;
 
 // Start Game
 startBtn.addEventListener("click", () => {
@@ -61,6 +67,7 @@ function setDifficulty() {
 // Start Game Logic
 function startGame() {
   setDifficulty();
+  startBtn.disabled = true; // Disable start button while playing
 
   // Remove any existing listener to avoid duplicate behavior
   wordInput.removeEventListener("input", checkWord);
@@ -82,6 +89,16 @@ function stopGame() {
 // Game Over
 function gameOver() {
   stopGame(); // Stop spawning and checking words
+  highScoreGameOver.textContent = highScore; // Display the high score in game over tab
+
+  // Update high score if current score is higher
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore); // Save new high score to local storage
+    highScoreDisplay.textContent = highScore; // Update high score display
+    highScoreGameOver.textContent = highScore; // Display the high score in game over tab
+  }
+
   finalScore.textContent = score; // Display final score
   gameOverMessage.classList.remove("d-none"); // Show Game Over message
   gameArea.innerHTML = ""; // Clear remaining words
@@ -122,7 +139,10 @@ function checkWord() {
     if (wordText.startsWith(typedWord)) {
       // Highlight matching portion in red
       wordElement.innerHTML = `
-        <span style="color: red;">${wordText.substring(0, typedWord.length)}</span>${wordText.substring(typedWord.length)}
+        <span style="color: red;">${wordText.substring(
+          0,
+          typedWord.length
+        )}</span>${wordText.substring(typedWord.length)}
       `;
       wordElement.setAttribute("data-word", wordText); // Save original word
     } else {
@@ -141,4 +161,3 @@ function checkWord() {
     }
   });
 }
-
