@@ -37,7 +37,8 @@ startBtn.addEventListener("click", () => {
 restartBtn.addEventListener("click", () => {
   gameOverMessage.classList.add("d-none"); // Hide Game Over message
   wordInput.disabled = false; // Re-enable input field
-  mainWindow.hidden = false; // Show main window
+  // mainWindow.hidden = false; // Show main window
+  mainWindow.style.display = "block"; // Hide main window
   wordInput.value = ""; // Clear input
   wordInput.focus(); // Focus on input field
   startBtn.disabled = false; // Enable start button
@@ -102,9 +103,13 @@ function gameOver() {
   finalScore.textContent = score; // Display final score
   gameOverMessage.classList.remove("d-none"); // Show Game Over message
   gameArea.innerHTML = ""; // Clear remaining words
-  mainWindow.hidden = true; // Hide main window
+  // mainWindow.hidden = true; // Hide main window
+  mainWindow.style.display = "none"; // Hide main window
   wordInput.disabled = true; // Disable input field
   startBtn.disabled = true; // Disable start button
+
+  // Autofocus the Restart Button
+  restartBtn.focus();
 }
 
 // Spawn a Word
@@ -114,18 +119,38 @@ function spawnWord() {
   wordElement.className = "word";
   wordElement.textContent = word;
   wordElement.style.left = `${Math.random() * (gameArea.clientWidth - 50)}px`;
+  wordElement.style.top = `0px`; // Start from top
   wordElement.style.animationDuration = `${fallSpeed}s`;
 
   gameArea.appendChild(wordElement);
   words.push(wordElement);
 
   wordElement.addEventListener("animationend", () => {
+    // Check if the word is still in the game area, i.e., it hasn't been removed
     if (gameArea.contains(wordElement)) {
+      // If word reaches the bottom, game over
       gameArea.removeChild(wordElement);
       words = words.filter((w) => w !== wordElement);
-      gameOver(); // End the game if a word reaches the bottom
+      gameOver();
     }
   });
+
+  // Continuously check if the word has reached the bottom manually (as fall might not trigger animationend)
+  const checkPosition = setInterval(() => {
+    const wordRect = wordElement.getBoundingClientRect();
+    if (
+      wordRect.top + wordRect.height >=
+      gameArea.getBoundingClientRect().bottom
+    ) {
+      // Check if wordElement is still in gameArea before attempting to remove
+      if (gameArea.contains(wordElement)) {
+        gameArea.removeChild(wordElement);
+        words = words.filter((w) => w !== wordElement);
+        gameOver();
+      }
+      clearInterval(checkPosition);
+    }
+  }, 100);
 }
 
 // Check User Input

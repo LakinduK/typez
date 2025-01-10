@@ -1,37 +1,102 @@
-/* Game Area */
+body {
+  background-color: #e0f7fa;
+  font-family: "Arial", sans-serif;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  color: #00796b;
+}
+
 #game-area {
-    width: 100%;
-    max-width: 600px;
-    height: 400px;
-    background-color: #f8f9fa;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  /* Falling Words */
-  .word {
-    position: absolute;
+  background: linear-gradient(
+    135deg,
+    rgba(63, 81, 181, 0.8),
+    rgba(33, 150, 243, 0.8)
+  );
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+input {
+  max-width: 400px;
+  margin: auto;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  width: 200px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#start-btn {
+  background-color: #00796b;
+  color: white;
+}
+
+#restart-btn {
+  background-color: #ff9800;
+  color: white;
+}
+
+#game-over {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+#game-over h2 {
+  color: #ff1744;
+}
+
+#final-score,
+#high-score-game-over {
+  font-weight: bold;
+}
+
+.word {
+  position: absolute;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  from {
     top: 0;
-    font-size: 1.2rem;
-    color: #333;
-    animation: fall linear;
   }
-  
-  /* Input and Buttons */
-  #word-input {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+  to {
+    top: 100%;
   }
-  
-  #start-btn {
-    width: 200px;
-  }
-  
-  /* Animations */
-  @keyframes fall {
-    to {
-      top: 400px;
-    }
-  }
-  
+}
+
+#difficulty {
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-size: 1.1em;
+}
+
+#score {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #00796b;
+}
+
+#high-score-game-over {
+  font-size: 1.3em;
+  color: #00796b;
+}
