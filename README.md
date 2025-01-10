@@ -1,5 +1,6 @@
-# Typing Game
+# TypeZ - Simple Javascript typing game
 
+<img src="https://github.com/user-attachments/assets/f4fcd66b-54c0-4459-bede-390b4f4d38cb" width="80%"> </br>
 A fun and interactive typing game where words fall from the top of the screen, and the player has to type them correctly before they hit the bottom. The game features adjustable difficulty levels, high score tracking, and a polished user interface.
 
 ## Features
